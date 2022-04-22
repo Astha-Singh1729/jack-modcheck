@@ -1,0 +1,10 @@
+.inputClass:focus {
+    
+    outline-style: solid;
+    outline-color: #06FF00;
+    outline-width: medium;
+    
+  }
+.buttonClass:hover {
+  color : white;
+}
