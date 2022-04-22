@@ -18,13 +18,26 @@ const Home = () => {
     axios.post('http://localhost:6969/', {
       "prompt": `${kuchAlag}`
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
       setDiv([<Message value={res.data} key={Math.random() * 10000000} color_={'white'} />, ...div])
       setLoading(false);
       setKuchAlag("");
     }).catch(err => console.log(err))
   }, [kuchAlag])
 
+  //kabhi mat bhoolna
+  type Panchayat = { post: string, response: string }
+  useEffect(() => {
+    axios.get('http://localhost:6969/stupidserver/', {
+
+    }).then((res) => {
+      let pepega: JSX.Element[] = [];
+      res.data.map(({ post, response }: Panchayat) => {
+        pepega = [<Message value={response} key={Math.random() * 10000000} color_={'white'} />, <Message value={post} key={Math.random() * 10000000} color_={'#06FF00'} />, ...pepega]
+      })
+      setDiv(pepega)
+    })
+  }, [])
   const buttonTrigger = (_: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     if (input === "") return;
     if (loading) return;
