@@ -6,6 +6,8 @@ export class Panchayat {
   post: string;
   @Column()
   response: string;
+  @Column()
+  date: string;
   @PrimaryGeneratedColumn()
   id: number;
 }

@@ -30,20 +30,43 @@ const main = async () => {
       temperature: 1,
       max_tokens: 300,
     });
-    if (response.data.choices) response.data.choices[0].text?.trim();
+    let final = response.data.choices
+      ? (response.data.choices[0].text as string)
+      : 'nhp';
+
+    final = final.trim();
+
     const myData = AppDataSource.getRepository(Panchayat);
+    const myDate = new Date();
     const newData = myData.create({
       post: req.body.prompt,
-      response: response.data.choices ? response.data.choices[0].text : 'nhp',
+      response: final,
+      date:
+        myDate.getDate().toString() +
+        '.' +
+        (myDate.getMonth() + 1).toString() +
+        '.' +
+        myDate.getFullYear().toString(),
     });
     await myData.insert(newData);
     console.log(response.data);
-    if (response.data.choices) res.send(response.data.choices[0].text);
-    else res.send('nhp');
+    console.log(final);
+    res.send(final);
   });
-  app.get('/stupidserver', async (_, res) => {
+  app.post('/stupidserver', async (req, res) => {
     const myData = await AppDataSource.getRepository(Panchayat).find();
-    res.send(myData);
+    myData.reverse();
+    const splittedData = [];
+    for (let i = 0; i < myData.length; i += 15) {
+      var part = myData.slice(i, i + 15);
+      splittedData.push(part);
+    }
+    if (req.body.cur >= splittedData.length) {
+      res.send('');
+    } else {
+      res.send(splittedData[req.body.cur].reverse());
+    }
+    console.log(req.body.cur);
   });
   app.listen(port, () => {
     console.log(`seeeeeeeeeeeeeeeeeeeeeeeee ${port}`);
