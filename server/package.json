@@ -23,7 +23,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc -w",
-    "start": "nodemon dist/src/server.js"
+    "start": "nodemon dist/src/server.js",
+    "chalja": "node dist/src/server.js",
+    "postinstall": "tsc"
   },
   "repository": {
     "type": "git",

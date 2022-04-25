@@ -21,7 +21,7 @@ const main = async () => {
     apiKey: apikey,
   });
   const openai = new OpenAIApi(configuration);
-  const port = 6969;
+  const port = process.env.PORT;
   app.post('/', async (req, res) => {
     console.log(req.body.prompt);
 
